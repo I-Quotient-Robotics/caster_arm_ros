@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="log_type" default="screen"/>
+
+  <arg name="teleop" default="true"/>
+
+  <!-- Robot description -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find caster_arm_description)/urdf/caster_arm.xacro" />
+
+  <!-- Robot base -->
+  <include file="$(find caster_base)/launch/include/base.launch.xml">
+    <arg name="log_type" value="$(arg log_type)"/>
+    <arg name="base_version" value="v2" />
+    <arg name="has_body" value="false" />
+    <arg name="laser_type" value="hokuyo" />
+  </include>
+
+  <!-- KINOVA arm -->
+  <node name="j2s6s200_driver" pkg="kinova_driver" type="kinova_arm_driver" respawn="true" output="$(arg log_type)" cwd="node" args="j2s6s200">
+    <rosparam file="$(find caster_arm_base)/config/robot_parameters.yaml" command="load" />
+    <param name="robot_name" value="j2s6s200" />
+    <param name="robot_type" value="j2s6s200" />
+    <param name="use_jaco_v1_fingers" value="false" />
+    <param name="status_interval_seconds" value="0.1" />
+    <remap from="j2s6s200_driver/out/joint_state" to="joint_states" />
+  </node>
+
+  <!-- Realsense -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="camera" value="rs" />
+    <arg name="align_depth" value="true" />
+    <arg name="enable_sync" value="true" />
+    <arg name="enable_depth" value="true" />
+    <arg name="enable_infra" value="true" />
+    <arg name="enable_color"      value="true"/>
+    <arg name="enable_pointcloud" value="true"/>
+  </include>
+
+  <!-- Teleop controller -->
+  <group if="$(arg teleop)">
+    <include file="$(find caster_base)/launch/include/teleop.launch.xml" />
+  </group>
+</launch>

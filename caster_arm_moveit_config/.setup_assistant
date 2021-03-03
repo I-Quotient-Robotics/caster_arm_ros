@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: caster_arm_description
+    relative_path: urdf/caster_arm.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/caster_xacro.srdf
+  CONFIG:
+    author_name: Ye Tian
+    author_email: ye.tian@iquotient-robotics.com
+    generated_timestamp: 1614768451

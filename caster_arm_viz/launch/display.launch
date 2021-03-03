@@ -1,0 +1,8 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<launch>  
+  <arg name="type" default="view"/>
+
+  <node name="rqt_runtime_monitor" pkg="rqt_runtime_monitor" type="rqt_runtime_monitor" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find caster_arm_viz)/viz/$(arg type).rviz" />
+</launch>

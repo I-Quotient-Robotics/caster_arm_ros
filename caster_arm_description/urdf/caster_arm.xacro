@@ -1,0 +1,43 @@
+<?xml version = "1.0"?>
+<robot name = "caster_xacro" xmlns:xacro = "http://www.ros.org/wiki/xacro">
+
+  <!-- Include accessories -->
+  <xacro:include filename = "$(find caster_description)/urdf/common_properties.xacro" />
+  <xacro:include filename = "$(find caster_description)/urdf/caster_v2.urdf.xacro" />
+  <xacro:include filename = "$(find kinova_description)/urdf/j2s6s200.xacro" />
+  <xacro:include filename = "$(find realsense2_description)/urdf/_d435i.urdf.xacro" />
+
+  <!-- base -->
+  <caster_robot/>
+
+  <!-- kinova 6dof arm -->
+  <link name="arm_mount_link" />
+  <joint name="arm_mount_joint" type="fixed">
+    <origin xyz="0.16 0 0.007" rpy="0 0 ${M_PI/2}" />
+    <parent link="top_plate_link"/>
+    <child link="arm_mount_link"/>
+  </joint>
+  <xacro:j2s6s200 base_parent="arm_mount_link"/> 
+
+  <!-- realsense -->
+  <link name="realsense_coupling_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://caster_arm_description/mesh/kinova_realsense_coupling.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.20 0.20 0.20 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="realsense_coupling_joint" type="fixed">
+    <origin xyz="0 0 0.007" rpy="0 0 0" />
+    <parent link="j2s6s200_link_6"/>
+    <child link="realsense_coupling_link"/>
+  </joint>
+
+  <xacro:sensor_d435i name="rs" parent="realsense_coupling_link" use_nominal_extrinsics="false">
+    <origin xyz="0.0875 0 -0.01515" rpy="0 ${M_PI/2} 0"/>
+  </xacro:sensor_d435i>
+</robot>
