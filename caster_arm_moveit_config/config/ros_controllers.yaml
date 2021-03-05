@@ -24,9 +24,9 @@ hardware_interface:
 # Creates the /joint_states topic necessary in ROS
 joint_state_controller:
   type: joint_state_controller/JointStateController
-  publish_rate: 50
+  publish_rate: 20
 controller_list:
-  - name: arm_controller
+  - name: j2s6s200
     action_ns: follow_joint_trajectory
     default: True
     type: FollowJointTrajectory
@@ -37,10 +37,10 @@ controller_list:
       - j2s6s200_joint_4
       - j2s6s200_joint_5
       - j2s6s200_joint_6
-  - name: gripper_controller
-    action_ns: follow_joint_trajectory
+  - name: j2s6s200_gripper
+    action_ns: gripper_command
     default: True
-    type: FollowJointTrajectory
+    type: GripperCommand
     joints:
       - j2s6s200_joint_finger_1
       - j2s6s200_joint_finger_2

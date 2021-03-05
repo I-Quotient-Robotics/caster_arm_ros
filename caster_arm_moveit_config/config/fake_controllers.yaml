@@ -15,4 +15,4 @@ initial:  # Define initial robot poses.
   - group: arm
     pose: home_a
   - group: gripper
-    pose: close
+    pose: open
