@@ -28,7 +28,7 @@ Caster-ARM移动抓取平台ROS包
 
 ## 物体识别与抓取示例
 
-1. 在完成[使用流程](使用流程)中的第一步后，执行如下指令，启动MoveIt
+1. 在完成[使用流程](#使用流程)中的第一步后，执行如下指令，启动MoveIt
 
    ```bash
    roslaunch caster_arm_moveit_config execute.launch
